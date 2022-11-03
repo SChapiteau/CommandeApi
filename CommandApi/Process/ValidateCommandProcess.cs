@@ -19,23 +19,13 @@ namespace CommandApi.Process
                 if (isStockAvailabelForCommand())
                 {
                     //Calcul du prix de la commande
-                    var calculator = new PriceCalculator();
+                    var calculator = new CommandPriceCalculator();
                     double prixCommande = calculator.GetPriceTtc(command);
-                    
 
                     //Vérification du client
-                    var urlWebServiceClient = ConfigurationHelper.getUrlCrm();
-                    ClientWebService web = new ClientWebService(urlWebServiceClient);
-                    Client client = web.GetClientCrm(command.Client.Id);
+                    var clientWrapper = new ClientCrmWrapper();
+                    bool isCommandinProgress = clientWrapper.HasCommandInProgress(command.Client.Id); //!!Lois de demeter !
 
-                    bool isCommandinProgress = false;
-                    foreach (var cmd in client.CommandesClient)
-                    {
-                        if (cmd.Etat == EtatCommande.NonPayer)
-                        {
-                            isCommandinProgress = true; break;
-                        }
-                    }
 
                     if (isCommandinProgress && prixCommande > 10000)
                     {
