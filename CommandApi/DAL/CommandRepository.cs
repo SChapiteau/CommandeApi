@@ -4,14 +4,14 @@ using CommandApi.Entity;
 
 namespace CommandApi.DAL
 {
-    internal class CommandeRepository
+    internal class CommandRepository
     {
-        private static CommandeRepository _instance;
-        public static CommandeRepository Instance
+        private static CommandRepository _instance;
+        public static CommandRepository Instance
         {
             get{
                 if (_instance == null)
-                    _instance = new CommandeRepository();
+                    _instance = new CommandRepository();
                 return _instance;
             }
         }
