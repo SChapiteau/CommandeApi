@@ -16,7 +16,8 @@ namespace CommandApi.Process
             {
                 InitialiseCommand(commandId);
 
-                if (isStockAvailabelForCommand())
+                var stockManager = new StockManager();
+                if (stockManager.IsStockAvailabelForCommand(commandId))
                 {
                     //Calcul du prix de la commande
                     var calculator = new CommandPriceCalculator();
