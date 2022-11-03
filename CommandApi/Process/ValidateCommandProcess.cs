@@ -17,7 +17,7 @@ namespace CommandApi.Process
                 InitialiseCommand(commandId);
 
                 var stockManager = new StockManager();
-                if (stockManager.IsStockAvailabelForCommand(commandId))
+                if (stockManager.IsStockAvailabelForCommand(command))
                 {
                     //Calcul du prix de la commande
                     var calculator = new CommandPriceCalculator();
@@ -28,17 +28,7 @@ namespace CommandApi.Process
                     bool isCommandinProgress = clientWrapper.HasCommandInProgress(command.Client.Id); //!!Lois de demeter !
 
 
-                    if (isCommandinProgress && prixCommande > 10000)
-                    {
-                        return new ValidateCommandProcessResult() { IsSucces = false, Message = "A command is already in progress" };
-                    }
-                    else
-                    {
-                        return new ValidateCommandProcessResult()
-                        {
-                            IsSucces = true,
-                        };
-                    }
+                    return CheckClientAvailability(prixCommande, isCommandinProgress);
                 }
                 return new ValidateCommandProcessResult() { IsSucces = false, Message = "Not enoug product in stock" };
 
@@ -49,16 +39,25 @@ namespace CommandApi.Process
             }
         }
 
-        private bool isStockAvailabelForCommand()
+        private static ValidateCommandProcessResult CheckClientAvailability(double prixCommande, bool isCommandinProgress)
         {
-            //Use the command field
-            throw new NotImplementedException();
+            if (isCommandinProgress && prixCommande > 10000)
+            {
+                return new ValidateCommandProcessResult() { IsSucces = false, Message = "A command is already in progress" };
+            }
+            else
+            {
+                return new ValidateCommandProcessResult()
+                {
+                    IsSucces = true,
+                };
+            }
         }
+
 
         private void InitialiseCommand(int commandId)
         {
-            //fill the command filed
-            throw new NotImplementedException();
+            command = CommandRepository.Instance.GetCommand(commandId);
         }
 
         

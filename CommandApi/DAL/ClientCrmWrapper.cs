@@ -33,7 +33,7 @@ namespace CommandApi.DAL
                 }
             }
 
-            return isCommandinProgress
+            return isCommandinProgress;
         
         }
     }
