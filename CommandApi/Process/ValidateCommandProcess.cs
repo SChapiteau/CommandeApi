@@ -19,13 +19,9 @@ namespace CommandApi.Process
                 if (isStockAvailabelForCommand())
                 {
                     //Calcul du prix de la commande
-                    double prixCommande = 0;
-                    foreach (var produitquandtite in command.ProduitCommande)
-                    {
-                        double prixProduit = TarifHelper.GetPrixByProduit(produitquandtite.Item1.Id);
-                        prixProduit = prixProduit * produitquandtite.Item2;
-                        prixCommande += prixProduit;
-                    }
+                    var calculator = new PriceCalculator();
+                    double prixCommande = calculator.GetPriceTtc(command);
+                    
 
                     //Vérification du client
                     var urlWebServiceClient = ConfigurationHelper.getUrlCrm();
