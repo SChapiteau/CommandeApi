@@ -8,13 +8,15 @@ namespace CommandApi.Process
 {
     public class ValidateCommandProcess
     {
+        private Command command;
+
         public ValidateCommandProcessResult ValidateCommande(int commandId)
         {
             try
             {
-                Command command = CommandRepository.Instance.GetCommand(commandId);
+                InitialiseCommand(commandId);
 
-                if (CheckStock(command.ProduitCommande))
+                if (isStockAvailabelForCommand())
                 {
                     //Calcul du prix de la commande
                     double prixCommande = 0;
@@ -60,10 +62,19 @@ namespace CommandApi.Process
             }
         }
 
-        private bool CheckStock(List<Tuple<Produit, int>> produitCommande)
+        private bool isStockAvailabelForCommand()
         {
+            //Use the command field
             throw new NotImplementedException();
         }
+
+        private void InitialiseCommand(int commandId)
+        {
+            //fill the command filed
+            throw new NotImplementedException();
+        }
+
+        
     }
 
     public class ValidateCommandProcessResult
