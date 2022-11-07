@@ -6,9 +6,23 @@ using System.ComponentModel.Design;
 
 namespace CommandApi.Process
 {
-    public class ValidateCommandProcess
+    public interface IValidateComemandProcess
+    {
+        ValidateCommandProcessResult ValidateCommande(int commandId);
+
+    }
+
+    public class ValidateComemandProcess : IValidateComemandProcess
     {
         private Command command;
+
+        private ICommandPriceCalculator priceCalculator;
+
+        public ValidateComemandProcess(ICommandPriceCalculator commandPriceCalculator)
+        {
+            priceCalculator = commandPriceCalculator;
+        }
+
 
         public ValidateCommandProcessResult ValidateCommande(int commandId)
         {
@@ -20,12 +34,11 @@ namespace CommandApi.Process
                 if (stockManager.IsStockAvailabelForCommand(command))
                 {
                     //Calcul du prix de la commande
-                    var calculator = new CommandPriceCalculator();
-                    double prixCommande = calculator.GetPriceTtc(command);
+                    double prixCommande = priceCalculator.GetPriceTtc(command);
 
                     //Vérification du client
                     var clientWrapper = new ClientCrmWrapper();
-                    bool isCommandinProgress = clientWrapper.HasCommandInProgress(command.Client.Id); //!!Lois de demeter !
+                    bool isCommandinProgress = clientWrapper.HasCommandInProgress(command.GetClientId());
 
 
                     return CheckClientAvailability(prixCommande, isCommandinProgress);

@@ -15,7 +15,7 @@ namespace CommandApi.Controllers
         [HttpGet]
         public ApiResult ValidateCommand(int commandId)
         {
-            var validateCommandProcess = new ValidateCommandProcess();
+            var validateCommandProcess = DependencyResolver.Ressolve<IValidateComemandProcess>();
             var processResult = validateCommandProcess.ValidateCommande(commandId);
 
             return new ApiResult()

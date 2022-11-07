@@ -6,6 +6,11 @@
 
         public List<Tuple<Produit, int>> ProduitCommande { get; set; }
         public EtatCommande Etat { get; set; }
+
+        internal int GetClientId()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public enum EtatCommande

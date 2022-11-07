@@ -2,9 +2,15 @@
 
 namespace CommandApi.Entity
 {
-    public class CommandPriceCalculator
+
+    public interface ICommandPriceCalculator
     {
-        internal double GetPriceTtc(Command command)
+        double GetPriceTtc(Command command);
+    }
+
+    public class CommandPriceCalculator : ICommandPriceCalculator
+    {
+        public double GetPriceTtc(Command command)
         {
             double commandPrice = 0;
             foreach (var produitquandtite in command.ProduitCommande)

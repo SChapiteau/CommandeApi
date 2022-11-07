@@ -6,7 +6,7 @@
         {
         }
 
-        internal bool IsStockAvailabelForCommand(int commandId)
+        internal bool IsStockAvailabelForCommand(Command commandId)
         {
             throw new NotImplementedException();
         }
