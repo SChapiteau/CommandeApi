@@ -11,8 +11,4 @@
     <PackageReference Include="Unity.WebAPI" Version="5.4.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Entity\Interface\" />
-  </ItemGroup>
-
 </Project>

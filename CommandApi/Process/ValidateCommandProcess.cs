@@ -17,10 +17,12 @@ namespace CommandApi.Process
         private Command command;
 
         private ICommandPriceCalculator priceCalculator;
+        private readonly IClientCrm clientCrm;
 
-        public ValidateComemandProcess(ICommandPriceCalculator commandPriceCalculator)
+        public ValidateComemandProcess(ICommandPriceCalculator commandPriceCalculator, IClientCrm clientCrm)
         {
             priceCalculator = commandPriceCalculator;
+            this.clientCrm = clientCrm;
         }
 
 
@@ -37,8 +39,7 @@ namespace CommandApi.Process
                     double prixCommande = priceCalculator.GetPriceTtc(command);
 
                     //Vérification du client
-                    var clientWrapper = new ClientCrmWrapper();
-                    bool isCommandinProgress = clientWrapper.HasCommandInProgress(command.GetClientId());
+                    bool isCommandinProgress = clientCrm.HasCommandInProgress(command.GetClientId());
 
 
                     return CheckClientAvailability(prixCommande, isCommandinProgress);

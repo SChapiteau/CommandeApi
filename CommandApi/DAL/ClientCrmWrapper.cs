@@ -4,7 +4,7 @@ using CommandApi.Service;
 
 namespace CommandApi.DAL
 {
-    public class ClientCrmWrapper
+    public class ClientCrmWrapper : IClientCrm
     {
         private ClientWebService clientWeb;
 
