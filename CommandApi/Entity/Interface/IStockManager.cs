@@ -1,6 +1,6 @@
 ﻿namespace CommandApi.Entity.Interface
 {
-    public interface IStockManager
+    public interface ICommandStockManager
     {
         bool IsStockAvailabelForCommand(Command commandId);
 

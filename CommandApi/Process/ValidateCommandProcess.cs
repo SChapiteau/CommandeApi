@@ -19,10 +19,10 @@ namespace CommandApi.Process
 
         private readonly ICommandPriceCalculator priceCalculator;
         private readonly ICommandRepository commandRepository;
-        private readonly IStockManager stockManager;
+        private readonly ICommandStockManager stockManager;
         private readonly IClientCrm clientCrm;
 
-        public ValidateComemandProcess(ICommandPriceCalculator commandPriceCalculator, IClientCrm clientCrm, ICommandRepository commandRepository, IStockManager stockManager)
+        public ValidateComemandProcess(ICommandPriceCalculator commandPriceCalculator, IClientCrm clientCrm, ICommandRepository commandRepository, ICommandStockManager stockManager)
         {
             priceCalculator = commandPriceCalculator;
             this.commandRepository = commandRepository;
@@ -37,23 +37,25 @@ namespace CommandApi.Process
             {
                 InitialiseCommand(commandId);
 
-                if (stockManager.IsStockAvailabelForCommand(command))
-                {
-                    //Calcul du prix de la commande
-                    double prixCommande = priceCalculator.GetPriceTtc(command);
+                CheckStockAvailability();
+                
+                double prixCommande = priceCalculator.GetPriceTtc(command);
 
-                    //Vérification du client
-                    bool isCommandinProgress = clientCrm.HasCommandInProgress(command.GetClientId());
+                bool isCommandinProgress = clientCrm.HasCommandInProgress(command.GetClientId());
 
-
-                    return CheckClientAvailability(prixCommande, isCommandinProgress);
-                }
-                return new ValidateCommandProcessResult() { IsSucces = false, Message = "Not enoug product in stock" };
-
+                return CheckClientAvailability(prixCommande, isCommandinProgress);
             }
             catch (Exception e)
             {
                 return new ValidateCommandProcessResult() { IsSucces = false, Message = e.Message };
+            }
+        }
+
+        private void CheckStockAvailability()
+        {
+            if (!stockManager.IsStockAvailabelForCommand(command))
+            {
+                throw new Exception("Not enoug product in stock");
             }
         }
 

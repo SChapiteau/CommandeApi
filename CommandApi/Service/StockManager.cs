@@ -4,10 +4,11 @@ using CommandApi.Entity.Interface;
 namespace CommandApi.Service
 {
     
-    internal class StockManager : IStockManager
+    internal class StockManager : ICommandStockManager
     {
         public StockManager()
         {
+            //use repository
         }
 
         public bool IsStockAvailabelForCommand(Command commandId)
