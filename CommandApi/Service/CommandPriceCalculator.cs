@@ -1,6 +1,7 @@
 ﻿using CommandApi.Controllers;
+using CommandApi.Entity;
 
-namespace CommandApi.Entity
+namespace CommandApi.Service
 {
 
     public interface ICommandPriceCalculator

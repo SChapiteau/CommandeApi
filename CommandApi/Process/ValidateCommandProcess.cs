@@ -19,12 +19,14 @@ namespace CommandApi.Process
 
         private readonly ICommandPriceCalculator priceCalculator;
         private readonly ICommandRepository commandRepository;
+        private readonly IStockManager stockManager;
         private readonly IClientCrm clientCrm;
 
-        public ValidateComemandProcess(ICommandPriceCalculator commandPriceCalculator, IClientCrm clientCr, ICommandRepository commandRepository)
+        public ValidateComemandProcess(ICommandPriceCalculator commandPriceCalculator, IClientCrm clientCrm, ICommandRepository commandRepository, IStockManager stockManager)
         {
             priceCalculator = commandPriceCalculator;
             this.commandRepository = commandRepository;
+            this.stockManager = stockManager;
             this.clientCrm = clientCrm;
         }
 
@@ -35,7 +37,6 @@ namespace CommandApi.Process
             {
                 InitialiseCommand(commandId);
 
-                var stockManager = new StockManager();
                 if (stockManager.IsStockAvailabelForCommand(command))
                 {
                     //Calcul du prix de la commande
