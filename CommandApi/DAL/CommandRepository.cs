@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.Design;
 using System.Reflection.Metadata.Ecma335;
 using CommandApi.Entity;
+using CommandApi.Entity.Interface;
 
 namespace CommandApi.DAL
 {
-    internal class CommandRepository
+    internal class CommandRepository : ICommandRepository
     {
         private static CommandRepository _instance;
         public static CommandRepository Instance

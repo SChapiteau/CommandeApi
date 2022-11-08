@@ -1,6 +1,7 @@
 ﻿using CommandApi.Controllers;
 using CommandApi.DAL;
 using CommandApi.Entity;
+using CommandApi.Entity.Interface;
 using CommandApi.Service;
 using System.ComponentModel.Design;
 
@@ -16,12 +17,14 @@ namespace CommandApi.Process
     {
         private Command command;
 
-        private ICommandPriceCalculator priceCalculator;
+        private readonly ICommandPriceCalculator priceCalculator;
+        private readonly ICommandRepository commandRepository;
         private readonly IClientCrm clientCrm;
 
-        public ValidateComemandProcess(ICommandPriceCalculator commandPriceCalculator, IClientCrm clientCrm)
+        public ValidateComemandProcess(ICommandPriceCalculator commandPriceCalculator, IClientCrm clientCr, ICommandRepository commandRepository)
         {
             priceCalculator = commandPriceCalculator;
+            this.commandRepository = commandRepository;
             this.clientCrm = clientCrm;
         }
 
@@ -71,7 +74,7 @@ namespace CommandApi.Process
 
         private void InitialiseCommand(int commandId)
         {
-            command = CommandRepository.Instance.GetCommand(commandId);
+            command = commandRepository.GetCommand(commandId);
         }
 
         
