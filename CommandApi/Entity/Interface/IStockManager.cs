@@ -2,7 +2,7 @@
 {
     public interface ICommandStockManager
     {
-        bool IsStockAvailabelForCommand(Command commandId);
+        bool IsStockAvailableForCommand(Commande commandeId);
 
     }
 }

@@ -1,31 +1,28 @@
-﻿using CommandApi.Controllers;
-using CommandApi.DAL;
-using CommandApi.Entity;
+﻿using CommandApi.Entity;
 using CommandApi.Entity.Interface;
 using CommandApi.Service;
-using System.ComponentModel.Design;
 
 namespace CommandApi.Process
 {
-    public interface IValidateComemandProcess
+    public interface IValidateCommandeProcess
     {
         ValidateCommandProcessResult ValidateCommande(int commandId);
 
     }
 
-    public class ValidateComemandProcess : IValidateComemandProcess
+    public class ValidateCommandeProcess : IValidateCommandeProcess
     {
-        private Command command;
+        private Commande _commande;
 
-        private readonly ICommandPriceCalculator priceCalculator;
-        private readonly ICommandRepository commandRepository;
+        private readonly ICommandePriceCalculator priceCalculator;
+        private readonly ICommandeRepository _commandeRepository;
         private readonly ICommandStockManager stockManager;
         private readonly IClientCrm clientCrm;
 
-        public ValidateComemandProcess(ICommandPriceCalculator commandPriceCalculator, IClientCrm clientCrm, ICommandRepository commandRepository, ICommandStockManager stockManager)
+        public ValidateCommandeProcess(ICommandePriceCalculator commandePriceCalculator, IClientCrm clientCrm, ICommandeRepository commandeRepository, ICommandStockManager stockManager)
         {
-            priceCalculator = commandPriceCalculator;
-            this.commandRepository = commandRepository;
+            priceCalculator = commandePriceCalculator;
+            this._commandeRepository = commandeRepository;
             this.stockManager = stockManager;
             this.clientCrm = clientCrm;
         }
@@ -39,11 +36,11 @@ namespace CommandApi.Process
 
                 CheckStockAvailability();
                 
-                double prixCommande = priceCalculator.GetPriceTtc(command);
+                double prixCommande = priceCalculator.GetPriceTtc(_commande);
 
-                bool isCommandinProgress = clientCrm.HasCommandInProgress(command.GetClientId());
+                bool isCommandInProgress = clientCrm.HasCommandInProgress(_commande.GetClientId());
 
-                return CheckClientAvailability(prixCommande, isCommandinProgress);
+                return CheckClientAvailability(prixCommande, isCommandInProgress);
             }
             catch (Exception e)
             {
@@ -53,9 +50,9 @@ namespace CommandApi.Process
 
         private void CheckStockAvailability()
         {
-            if (!stockManager.IsStockAvailabelForCommand(command))
+            if (!stockManager.IsStockAvailableForCommand(_commande))
             {
-                throw new Exception("Not enoug product in stock");
+                throw new Exception("Not enough product in stock");
             }
         }
 
@@ -63,7 +60,7 @@ namespace CommandApi.Process
         {
             if (isCommandinProgress && prixCommande > 10000)
             {
-                return new ValidateCommandProcessResult() { IsSucces = false, Message = "A command is already in progress" };
+                return new ValidateCommandProcessResult() { IsSucces = false, Message = "A commande is already in progress" };
             }
             else
             {
@@ -77,7 +74,7 @@ namespace CommandApi.Process
 
         private void InitialiseCommand(int commandId)
         {
-            command = commandRepository.GetCommand(commandId);
+            _commande = _commandeRepository.GetCommande(commandId);
         }
 
         

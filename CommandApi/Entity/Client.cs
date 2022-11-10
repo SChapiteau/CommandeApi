@@ -3,6 +3,6 @@
     public class Client
     {
         public int Id { get; set; }
-        public List<Command> CommandesClient { get; internal set; }
+        public List<Commande> CommandesClient { get; internal set; }
     }
 }

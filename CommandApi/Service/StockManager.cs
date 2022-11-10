@@ -11,7 +11,7 @@ namespace CommandApi.Service
             //use repository
         }
 
-        public bool IsStockAvailabelForCommand(Command commandId)
+        public bool IsStockAvailableForCommand(Commande commandeId)
         {
             throw new NotImplementedException();
         }

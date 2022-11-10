@@ -1,8 +1,4 @@
-﻿using CommandApi.Controllers;
-using CommandApi.Entity;
-using CommandApi.Service;
-
-namespace CommandApi.DAL
+﻿namespace CommandApi.Entity.Interface
 {
     public interface IClientCrm
     {

@@ -1,5 +1,6 @@
 ﻿using CommandApi.Process;
-using System.ComponentModel;
+using CommandApi.DAL;
+using CommandApi.Entity.Interface;
 using Unity;
 
 namespace CommandApi.Controllers
@@ -12,11 +13,11 @@ namespace CommandApi.Controllers
         {
             container = new UnityContainer();
 
-            container.RegisterType<IValidateComemandProcess, ValidateComemandProcess>();
+            container.RegisterType<IValidateCommandeProcess, ValidateCommandeProcess>();
         }
 
 
-        public static T Ressolve<T>()
+        public static T Resolve<T>()
         {
             return container.Resolve <T> ();
         }

@@ -21,14 +21,6 @@ namespace CommandApi.Service
         public Client GetClientCrm(int id)
         {
             throw new NotImplementedException();
-            //return new Client()
-            //{
-            //    CommandesClient = new List<Command>()
-            //    {
-            //        new Command(){Etat = EtatCommande.Payer},
-            //        new Command(){Etat = EtatCommande.NonPayer},
-            //    }
-            //}
         }
 
     }

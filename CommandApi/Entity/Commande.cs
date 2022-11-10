@@ -1,6 +1,6 @@
 ﻿namespace CommandApi.Entity
 {
-    public class Command
+    public class Commande
     {
         public Client Client { get; set; }
 
@@ -9,7 +9,7 @@
 
         internal int GetClientId()
         {
-            throw new NotImplementedException();
+            return Client.Id;
         }
     }
 

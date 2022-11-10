@@ -4,12 +4,11 @@ using CommandApi.Entity.Interface;
 using CommandApi.Process;
 using CommandApi.Service;
 using Moq;
-using System.Net;
 
 namespace CommandApi.test
 {
     [TestClass]
-    public class ValidateComemandProcessShould
+    public class ValidateCommandeProcessShould
     {
         
 
@@ -19,16 +18,16 @@ namespace CommandApi.test
         public void ReturnOk_When_StockIsAvailable_and_NewClient()
         {
             //Given
-            var priceCalcilatorMock = new Mock<ICommandPriceCalculator>();
+            var priceCalculatorMock = new Mock<ICommandePriceCalculator>();
             var crmClientMock = new Mock<IClientCrm>();
             crmClientMock.Setup(c => c.GetClient(It.IsAny<int>())).Returns(new Client());
-            var commandRepoMock = new Mock<ICommandRepository>();
-            commandRepoMock.Setup(r => r.GetCommand(It.IsAny<int>())).Returns(new Command());
+            var commandRepoMock = new Mock<ICommandeRepository>();
+            commandRepoMock.Setup(r => r.GetCommande(It.IsAny<int>())).Returns(new Commande() { Client = new Client() { Id = 1 } });
             var stockManagerMock = new Mock<ICommandStockManager>();
-            stockManagerMock.Setup(s => s.IsStockAvailabelForCommand(It.IsAny<Command>())).Returns(true);
+            stockManagerMock.Setup(s => s.IsStockAvailableForCommand(It.IsAny<Commande>())).Returns(true);
             
 
-            ValidateComemandProcess _sut = new ValidateComemandProcess(priceCalcilatorMock.Object,
+            ValidateCommandeProcess _sut = new ValidateCommandeProcess(priceCalculatorMock.Object,
                 crmClientMock.Object,
                 commandRepoMock.Object,
                 stockManagerMock.Object);
@@ -41,19 +40,19 @@ namespace CommandApi.test
         }
 
         [TestMethod]
-        public void Return_NotEnougthStock_When_StockIsNotAvailable()
+        public void Return_NotEnoughStock_When_StockIsNotAvailable()
         {
             //Given
-            var priceCalcilatorMock = new Mock<ICommandPriceCalculator>();
+            var priceCalculatorMock = new Mock<ICommandePriceCalculator>();
             var crmClientMock = new Mock<IClientCrm>();
             crmClientMock.Setup(c => c.GetClient(It.IsAny<int>())).Returns(new Client());
-            var commandRepoMock = new Mock<ICommandRepository>();
-            commandRepoMock.Setup(r => r.GetCommand(It.IsAny<int>())).Returns(new Command());
+            var commandRepoMock = new Mock<ICommandeRepository>();
+            commandRepoMock.Setup(r => r.GetCommande(It.IsAny<int>())).Returns(new Commande());
             var stockManagerMock = new Mock<ICommandStockManager>();
-            stockManagerMock.Setup(s => s.IsStockAvailabelForCommand(It.IsAny<Command>())).Returns(false);
+            stockManagerMock.Setup(s => s.IsStockAvailableForCommand(It.IsAny<Commande>())).Returns(false);
 
 
-            ValidateComemandProcess _sut = new ValidateComemandProcess(priceCalcilatorMock.Object,
+            ValidateCommandeProcess _sut = new ValidateCommandeProcess(priceCalculatorMock.Object,
                 crmClientMock.Object,
                 commandRepoMock.Object,
                 stockManagerMock.Object);

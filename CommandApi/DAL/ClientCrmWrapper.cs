@@ -1,5 +1,6 @@
 ﻿using CommandApi.Controllers;
 using CommandApi.Entity;
+using CommandApi.Entity.Interface;
 using CommandApi.Service;
 
 namespace CommandApi.DAL

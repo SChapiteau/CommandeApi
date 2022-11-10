@@ -4,20 +4,20 @@ using CommandApi.Entity;
 namespace CommandApi.Service
 {
 
-    public interface ICommandPriceCalculator
+    public interface ICommandePriceCalculator
     {
-        double GetPriceTtc(Command command);
+        double GetPriceTtc(Commande commande);
     }
 
-    public class CommandPriceCalculator : ICommandPriceCalculator
+    public class CommandePriceCalculator : ICommandePriceCalculator
     {
-        public double GetPriceTtc(Command command)
+        public double GetPriceTtc(Commande commande)
         {
             double commandPrice = 0;
-            foreach (var produitquandtite in command.ProduitCommande)
+            foreach (var produitquandtite in commande.ProduitCommande)
             {
                 double prixProduit = TarifHelper.GetPrixByProduit(produitquandtite.Item1.Id);
-                prixProduit = prixProduit * produitquandtite.Item2;
+                prixProduit *= produitquandtite.Item2;
                 commandPrice += prixProduit;
             }
             return commandPrice;
